@@ -61,4 +61,18 @@ public class LibroService {
         }
         return Optional.empty();
     }
+
+    public Optional<Libro> restituisciLibro(Long id) {
+        Optional<Libro> libroOptional = libroRepository.findById(id);
+        // Controlliamo che il libro da restituire sia prestato
+        if (libroOptional.isPresent()) {
+            if (libroOptional.get().getStatoLibroEnum().equals(StatoLibroEnum.PRESTATO)) {
+                libroOptional.get().setStatoLibroEnum(StatoLibroEnum.DISPONIBILE);
+                Libro libroSaved = libroRepository.save(libroOptional.get());
+                return Optional.of(libroSaved);
+            }
+        }
+        return Optional.empty();
+    }
+
 }

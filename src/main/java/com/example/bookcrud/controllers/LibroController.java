@@ -53,4 +53,14 @@ public class LibroController {
             return ResponseEntity.ok().build();
         }
     }
+
+    @GetMapping("/restituiscilibro/{id}")
+    public ResponseEntity<Libro> restituisciLibro(@PathVariable Long id) {
+        Optional<Libro> libroRestituito = libroService.restituisciLibro(id);
+        if (libroRestituito.isPresent()) {
+            return ResponseEntity.ok(libroRestituito.get());
+        } else {
+            return ResponseEntity.ok().build();
+        }
+    }
 }
